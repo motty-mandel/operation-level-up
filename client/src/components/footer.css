@@ -1,8 +1,9 @@
-.navbar {
+footer {
     display: inline-block;
     width: 100%;
+    margin-top: 20px 0;
 }
 
-.copyright {
+.footer-title {
     text-align: center;
 }

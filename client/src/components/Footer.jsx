@@ -3,12 +3,15 @@ import './footer.css';
 
 export default function Footer() {
     return (
-        <div className="navbar fixed-bottom">
-            <div className="row">
-                <div className="col-12">
-                    <p className="copyright">&copy; 2021</p>
+        <footer className="footer">
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 custom-footer">
+                        <h4 className='footer-title'>Level Up
+                        </h4>
+                    </div>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 }
