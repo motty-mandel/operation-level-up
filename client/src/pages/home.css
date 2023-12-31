@@ -1,17 +1,15 @@
 .welcome {
     font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin: 1rem;
     text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.video {
-    margin-bottom: 30px;
-}
-
-div iframe {
-    width: 500px;
-    height: 500px;
+.welcome-vid video {
+    margin: 30px auto;
+    display: block;
+    width: 700px;
+    align-items: center;
     border-radius: 25px;
+    border: 5px solid #1b7eff;
 }

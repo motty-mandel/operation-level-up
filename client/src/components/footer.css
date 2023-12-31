@@ -1,9 +1,10 @@
-footer {
-    display: inline-block;
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    margin-top: 20px 0;
-}
-
-.footer-title {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
     text-align: center;
+    padding: 10px;
 }
