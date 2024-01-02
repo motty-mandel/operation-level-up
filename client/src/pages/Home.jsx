@@ -8,7 +8,7 @@ export default function Home() {
                 <h1>WELCOME TO LEVEL UP</h1>
             </div>
             <div className='welcome-vid'>
-                <video src="../../public/sheep.mp4" type='video/mp4' controls>
+                <video src="/sheep.mp4" type='video/mp4' controls>
                     Your browser does not support the video tag.
                 </video>
             </div>
