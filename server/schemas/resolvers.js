@@ -1,48 +1,46 @@
 const { User } = require('../models');
-const { signToken, AuthenticationError} = require('../utils/auth');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
-    Query: {
-        user: async (parent, args, context) => {
-            if (context.user) {
-                const user = await User.findById(context.user._id);
-                return user;
-              }
-        
-              throw AuthenticationError;
-        },
+  Query: {
+    users: async () => {
+      return User.find();
     },
-    Mutation: {
-        updateUser: async (parent, args, context) => {
-            if (context.user) {
-              return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-            }
-      
-            throw AuthenticationError;
-          },
-        login: async (parent, { email, password }) => {
-            const user = await User.findOne({email});
+    user: async (parent, { username }) => {
+      return User.findOne({ username });
+    },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id });
+      }
+      throw AuthenticationError;
+    },
+  },
 
-            if(!user) {
-                throw new AuthenticationError('Incorrect credentials');
-            }
+  Mutation: {
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
-            const correctPw = await user.isCorrectPassword(password);
+      if (!user) {
+        throw AuthenticationError;
+      }
 
-            if(!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
-            }
+      const correctPw = await user.isCorrectPassword(password);
 
-            const token = signToken(user);
-            return { token, user };
-        },
-        addUser: async (parent, args) => {
-            const user = await User.create(args);
-            const token = signToken(user);
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
 
-            return { token, user };
-        },
-    }
+      const token = signToken(user);
+
+      return { token, user };
+    },
+  },
 };
 
 module.exports = resolvers;
