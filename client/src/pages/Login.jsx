@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
@@ -8,6 +8,7 @@ import Auth from '../utils/auth';
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  // const { setAuthState } = useContext(Auth);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -29,6 +30,7 @@ const Login = (props) => {
       });
 
       Auth.login(data.login.token);
+      Auth.loggedIn();
     } catch (e) {
       console.error(e);
     }
@@ -49,7 +51,7 @@ const Login = (props) => {
             {data ? (
               <p>
                 Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                <a  href="/" onClick={(e) => { e.preventDefault(); window.location.assign('/'); }}>back to the homepage.</a>
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
