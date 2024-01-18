@@ -5,9 +5,24 @@
     text-align: center;
 }
 
+.welcome-vid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .welcome-vid video {
+    background-color: white;
     margin: 30px auto;
-    display: block;
     width: 700px;
     align-items: center;
+}
+
+.welcome-vid p {
+    color: white;
+}
+
+input {
+    margin-top: 20px;
+    width: 96.989px;
 }

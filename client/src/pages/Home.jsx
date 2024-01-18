@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Auth from '../utils/auth';
 
 export default function Home() {
+    const isLoggedIn = Auth.loggedIn();
+
     const [selectedFile, setSelectedFile] = useState(null);
     const [videos, setVideos] = useState([]);
 
@@ -42,13 +45,17 @@ export default function Home() {
                 <h1>WELCOME TO LEVEL UP</h1>
             </div>
             <div className='welcome-vid'>
-                <input type="file" name='upload' accept='video/*' onChange={handleFileUpload} />
+                <video src="sheep.mp4" type='video/mp4' controls>
+                    Your browser does not support the video tag.
+                </video>
+                {isLoggedIn ? (
+                <>
                 <button onClick={uploadFile}>Upload</button>
-                {videos.map((video, index) => (
-                    <video key={index} src={video.url} type='video/mp4' controls>
-                        Your browser does not support the video tag.
-                    </video>
-                ))}
+                <input type="file" name='upload' accept='video/*' onChange={handleFileUpload} />
+                </>
+                ) : (
+                    <p>Sign up or login to upload videos</p>
+                )}
             </div>
         </div>
     );
