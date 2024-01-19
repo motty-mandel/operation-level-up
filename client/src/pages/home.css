@@ -14,7 +14,7 @@
 .welcome-vid video {
     background-color: white;
     margin: 30px auto;
-    width: 700px;
+    width: 500px;
     align-items: center;
 }
 
@@ -24,5 +24,5 @@
 
 input {
     margin-top: 20px;
-    width: 96.989px;
+    /* width: 96.989px; */
 }

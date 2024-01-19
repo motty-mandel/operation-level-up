@@ -3,6 +3,21 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
+const cors = require('cors');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '../client/src/videos')
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, Date.now() + '-' + path.extname(file.originalname))
+  }
+});
+
+const upload = multer({storage: storage})
+
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -42,6 +57,18 @@ const startApolloServer = async () => {
     });
   });
 };
+
+app.use(express.static('staticPages'));
+
+app.get('/upload', cors(), (req, res) => {
+  res.sendFile(path.join(__dirname, './staticPages/upload.html'));
+  console.log("get upload");
+});
+
+app.post('/upload', cors(), upload.single('file'), (req, res ) => {
+  console.log("post upload");
+  res.send('Image uploaded');
+})
 
 // Call the async function to start the server
 startApolloServer();

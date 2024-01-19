@@ -15,15 +15,22 @@ export default function Home() {
     };
 
     const uploadFile = async () => {
+        event.preventDefault();
         const formData = new FormData();
         formData.append('file', selectedFile);
 
         // replace '/upload' with your server-side upload endpoint
-        await axios.post('/upload', formData, {
+        await axios.post('http://localhost:3001/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
+        
+        if (selectedFile) {
+            console.log('file uploaded successfully');
+        } else {
+            console.log('no file selected');
+        }
 
         setSelectedFile(null);
         fetchVideos();
@@ -31,8 +38,9 @@ export default function Home() {
 
     const fetchVideos = async () => {
         // replace '/videos' with your server-side videos endpoint
-        const response = await axios.get('/videos');
-        setVideos(response.data);
+        // const response = await axios.get('');
+        // setVideos(response.data);
+        console.log('Videos got')
     };
 
     useEffect(() => {
@@ -50,8 +58,10 @@ export default function Home() {
                 </video>
                 {isLoggedIn ? (
                 <>
-                <button onClick={uploadFile}>Upload</button>
-                <input type="file" name='upload' accept='video/*' onChange={handleFileUpload} />
+                    <form method='POST' onSubmit={uploadFile} encType='multipart/form-data'>
+                        <input type="file" name='videos'/>
+                        <input type="submit" />
+                    </form>
                 </>
                 ) : (
                     <p>Sign up or login to upload videos</p>
