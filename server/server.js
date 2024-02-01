@@ -8,10 +8,9 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../client/src/videos')
+    cb(null, 'videos')
   },
   filename: (req, file, cb) => {
-    console.log(file);
     cb(null, Date.now() + '-' + path.extname(file.originalname))
   }
 });
@@ -34,9 +33,10 @@ const server = new ApolloServer({
 const startApolloServer = async () => {
   await server.start();
 
+  app.use(cors());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-
+  app.use('/videos', express.static(path.join(__dirname, '/videos')));
 
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
@@ -58,16 +58,15 @@ const startApolloServer = async () => {
   });
 };
 
-app.use(express.static('staticPages'));
-
-app.get('/upload', cors(), (req, res) => {
-  res.sendFile(path.join(__dirname, './staticPages/upload.html'));
-  console.log("get upload");
-});
 
 app.post('/upload', cors(), upload.single('file'), (req, res ) => {
-  console.log("post upload");
-  res.send('Image uploaded');
+  const filePath = path.join('/videos', req.file.filename);
+  try {
+    res.json({ filePath });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+  
 })
 
 // Call the async function to start the server

@@ -26,3 +26,10 @@ input {
     margin-top: 20px;
     /* width: 96.989px; */
 }
+
+@media screen and (max-width: 768px) {
+    .welcome-vid video {
+        width: 300px;
+    }
+    
+}
