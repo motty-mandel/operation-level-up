@@ -9,6 +9,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(255, 38, 38, 0.9);
+    background: rgba(255, 235, 235, 0.15);
 }
 
 .welcome-vid video {
@@ -16,6 +19,7 @@
     margin: 30px auto;
     width: 500px;
     align-items: center;
+    max-height: 250px;    
 }
 
 .welcome-vid p {

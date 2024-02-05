@@ -17,33 +17,53 @@ export default function Home() {
         const formData = new FormData();
         formData.append('file', selectedFile);
         axios.post('http://localhost:3001/upload', formData)
-        .then(response => {
-            setVideoSrc(`http://localhost:3001${response.data.filePath}`);
-        })
-        .catch(err => console.log(err));
+            .then(response => {
+                const videoUrl = `http://localhost:3001${response.data.filePath}`;
+                setVideoSrc(videoUrl);
+                localStorage.setItem('videoSrc', videoUrl);
+            })
+            .catch(err => console.log(err));
     };
+
+    useEffect(() => {
+        const videoUrl = localStorage.getItem('videoSrc');
+        if (videoUrl) {
+            setVideoSrc(videoUrl);
+        }
+    })
 
 
 
     return (
         <div>
-            <div className='welcome'>
-                <h1>WELCOME TO LEVEL UP</h1>
-            </div>
-            <div className='welcome-vid'>
+            {isLoggedIn ? (
+                <div className='welcome'>
+                    <h1></h1>
+                </div>
+            ) : (
+                <div className='welcome'>
+                    <h1>WELCOME TO LEVEL UP</h1>
+                </div>
+
+            )
+            }
+            <div className='welcome-vid mt-5'>
                 <video src={videoSrc} type='video/mp4' controls>
                     Your browser does not support the video tag.
                 </video>
                 {isLoggedIn ? (
-                <>
-                    <form  encType='multipart/form-data'>
-                        <input type="file" name='videos' onChange={e => setSelectedFile(e.target.files[0])}/>
-                        <input type="submit" onClick={(event) => handleUpload(event)}/>
-                    </form>
-                </>
+                    <>
+                        <form encType='multipart/form-data'>
+                            <input type="file" name='videos' onChange={e => setSelectedFile(e.target.files[0])} />
+                            <input type="submit" onClick={(event) => handleUpload(event)} />
+                        </form>
+                    </>
                 ) : (
                     <p>Sign up or login to upload videos</p>
                 )}
+
+
+
             </div>
         </div>
     );
