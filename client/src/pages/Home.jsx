@@ -35,7 +35,7 @@ export default function Home() {
 
 
     return (
-        <div>
+        <div className='welcomeMain'>
             {isLoggedIn ? (
                 <div className='welcome'>
                     <h1></h1>
@@ -47,7 +47,7 @@ export default function Home() {
 
             )
             }
-            <div className='welcome-vid mt-5'>
+            <div className='welcome-vid'>
                 <video src={videoSrc} type='video/mp4' controls>
                     Your browser does not support the video tag.
                 </video>

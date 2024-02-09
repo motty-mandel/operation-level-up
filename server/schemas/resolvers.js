@@ -29,6 +29,9 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    removeUser: async (parent, { _id }) => {
+      return User.findOneAndDelete({ _id });
+    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
