@@ -10,7 +10,7 @@
     font-weight: 600;
     /* margin: 1rem; */
     text-align: center;
-    width: 420px;
+    width: 440px;
 }
 
 .welcome h1 {
@@ -38,9 +38,12 @@
     color: white;
 }
 
+.welcome-vid form input#file-upload-button {
+    color: red;
+}
+
 input {
     margin-top: 20px;
-    /* width: 96.989px; */
 }
 
 @media screen and (max-width: 768px) {
