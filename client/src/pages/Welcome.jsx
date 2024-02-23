@@ -4,16 +4,16 @@ import './welcome.css';
 
 
 export default function Welcome() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const first = localStorage.getItem('firstTime');
-    //     if (first === null) {
-    //         localStorage.setItem('firstTime', 'You were here!');
-    //     } else {
-    //         navigate('/home');
-    //     }
-    // }, [])
+    useEffect(() => {
+        const first = localStorage.getItem('firstTime');
+        if (first === null) {
+            localStorage.setItem('firstTime', 'You were here!');
+        } else {
+            navigate('/home');
+        }
+    }, [])
 
     return (
         <div className='mainWelcome'>
