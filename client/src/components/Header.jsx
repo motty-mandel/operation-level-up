@@ -18,7 +18,7 @@ export default function Header() {
         <div className="container-fluid">
             <div className="row align-items-center justify-content-between">
                 <div className="col-auto img">
-                    <Link to='/'>
+                    <Link to='/home'>
                         <img src="./logo.png" alt="logo" />
                     </Link>
                 </div>
