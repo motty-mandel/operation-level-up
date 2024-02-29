@@ -45,14 +45,4 @@
 }
 
 @media screen and (max-width: 768px) {
-    .sign {
-        display: flex;
-        flex-direction: column;
-    }
-    .sign button {
-        margin-bottom: 10px;
-    }
-    .sign a {
-        height: 35px;
-    }
 }

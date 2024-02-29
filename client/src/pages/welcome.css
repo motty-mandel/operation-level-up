@@ -42,3 +42,16 @@
     margin-right: 10px;
     line-height: 1;
 }
+
+@media screen and (max-width: 768px) {
+    .mainWelcome {
+        width: 90vw;
+    }
+    .mainWelcome h1 {
+        font-size: 40px;
+    }
+    .mainWelcome p {
+        font-size: 12px;
+        color: #284c09;
+    }
+}
