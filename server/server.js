@@ -1,22 +1,42 @@
+const fs = require('fs');
+require('dotenv').config();
+const { Storage } = require('megajs');
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const cors = require('cors');
-const multer = require('multer');
+// const multer = require('multer');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'videos')
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + path.extname(file.originalname))
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'videos')
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + '-' + path.extname(file.originalname))
+//   }
+// });
 
-const upload = multer({storage: storage})
+// const upload = multer({storage: storage})
 
+
+(async function () {
+  const storage = new Storage({
+    email: 'mandelmottyisrael65@gmail.com',
+    password: 'Minemegajs1515',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+  })
+  await storage.ready
+}()).catch(error => {
+  console.error(error)
+  process.exit(1)
+})
+
+storage.upload('hello-world.txt', 'Hello world!', (error, file) => {
+  if (error) return console.error('There was an error:', error)
+  console.log('The file was uploaded!', file)
+})
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -59,7 +79,7 @@ const startApolloServer = async () => {
 };
 
 
-app.post('/upload', cors(), upload.single('file'), (req, res ) => {
+app.post('/upload', cors(), (req, res ) => {
   const filePath = path.join('/videos', req.file.filename);
   try {
     res.json({ filePath });
@@ -69,5 +89,5 @@ app.post('/upload', cors(), upload.single('file'), (req, res ) => {
   
 })
 
-// Call the async function to start the server
+// Call the async function to start the server ;upload.single('file'),
 startApolloServer();
