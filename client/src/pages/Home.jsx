@@ -3,6 +3,7 @@ import axios from 'axios';
 import Auth from '../utils/auth';
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { set } from 'mongoose';
 
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [videoSrc, setVideoSrc] = useState('');
     const [timeRemaining, setTimeRemaining] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -24,7 +26,10 @@ export default function Home() {
                 setVideoSrc(videoUrl);
                 localStorage.setItem('videoSrc', videoUrl);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setErrorMessage('There was an error uploading the video');
+            })
+        console.log(err);
         localStorage.setItem('uploadTime', Date.now());
         setShowInput(false);
     };
@@ -87,7 +92,7 @@ export default function Home() {
                             <input type="submit" onClick={handleUpload} className='input' />
                         </form>
                     ) : (
-                        <p>Video has been uploaded. Please wait 1 minute to upload another video.</p>
+                        <p id="userMessage" >Video has been uploaded. Please wait 1 minute to upload another video.</p>
                     )
                 ) : (
                     <p>Sign up or login to upload videos</p>

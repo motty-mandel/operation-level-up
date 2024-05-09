@@ -21,22 +21,25 @@ const cors = require('cors');
 // const upload = multer({storage: storage})
 
 
-(async function () {
+async function uploadFile(file) {
   const storage = new Storage({
     email: 'mandelmottyisrael65@gmail.com',
     password: 'Minemegajs1515',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
   })
   await storage.ready
-}()).catch(error => {
+  storage.upload(file, (error, file) => {
+  if (error) return console.error('There was an error:', error)
+  console.log('The file was uploaded!', file)
+})
+}
+
+uploadFile.catch(error => {
   console.error(error)
   process.exit(1)
 })
 
-storage.upload('hello-world.txt', 'Hello world!', (error, file) => {
-  if (error) return console.error('There was an error:', error)
-  console.log('The file was uploaded!', file)
-})
+
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -81,12 +84,12 @@ const startApolloServer = async () => {
 
 app.post('/upload', cors(), (req, res ) => {
   const filePath = path.join('/videos', req.file.filename);
+  uploadFile(filePath);
   try {
     res.json({ filePath });
   } catch (err) {
     res.status(500).json(err);
   }
-  
 })
 
 // Call the async function to start the server ;upload.single('file'),
