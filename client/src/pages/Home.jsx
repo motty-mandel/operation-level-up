@@ -3,7 +3,7 @@ import axios from 'axios';
 import Auth from '../utils/auth';
 import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { set } from 'mongoose';
+
 
 
 export default function Home() {
@@ -29,9 +29,8 @@ export default function Home() {
             .catch(err => {
                 setErrorMessage('There was an error uploading the video');
             })
-        console.log(err);
         localStorage.setItem('uploadTime', Date.now());
-        setShowInput(false);
+        setShowInput(false); 
     };
 
     useEffect(() => {

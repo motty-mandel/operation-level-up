@@ -7,18 +7,21 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const cors = require('cors');
-// const multer = require('multer');
+const multer = require('multer');
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'videos')
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + '-' + path.extname(file.originalname))
-//   }
-// });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'videos')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + path.extname(file.originalname))
+  }
+});
 
-// const upload = multer({storage: storage})
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1 * 1024 * 1024 },
+})
 
 
 async function uploadFile(file) {
@@ -33,11 +36,10 @@ async function uploadFile(file) {
   console.log('The file was uploaded!', file)
 })
 }
-
-uploadFile.catch(error => {
-  console.error(error)
-  process.exit(1)
-})
+// .catch(error => {
+//   console.error(error)
+//   process.exit(1)
+// })
 
 
 
@@ -82,7 +84,10 @@ const startApolloServer = async () => {
 };
 
 
-app.post('/upload', cors(), (req, res ) => {
+app.post('/upload', cors(), upload.single('file'), (req, res ) => {
+  if (req.fileValidationError) { 
+    return res.status(400).send(req.fileValidationError);
+  }
   const filePath = path.join('/videos', req.file.filename);
   uploadFile(filePath);
   try {
@@ -92,5 +97,5 @@ app.post('/upload', cors(), (req, res ) => {
   }
 })
 
-// Call the async function to start the server ;upload.single('file'),
+// Call the async function to start the server ;
 startApolloServer();
