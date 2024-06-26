@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Rnd } from 'react-rnd';
 import axios from 'axios';
 import Auth from '../utils/auth';
 import './home.css';
