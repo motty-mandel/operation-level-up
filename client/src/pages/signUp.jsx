@@ -34,7 +34,8 @@ const Signup = () => {
       });
 
       Auth.login(data.addUser.token);
-    } catch (e) {
+    }
+    catch (e) {
       console.error(e);
     }
   };
@@ -57,7 +58,7 @@ const Signup = () => {
                   placeholder="Your username"
                   name="username"
                   type="text"
-                  value={formState.name}
+                  value={formState.username}
                   onChange={handleChange}
                 />
                 <input

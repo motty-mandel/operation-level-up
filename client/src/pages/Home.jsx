@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Rnd } from 'react-rnd';
 import axios from 'axios';
 import Auth from '../utils/auth';
 import './home.css';
@@ -30,7 +31,7 @@ export default function Home() {
                 setErrorMessage('There was an error uploading the video');
             })
         localStorage.setItem('uploadTime', Date.now());
-        setShowInput(false); 
+        setShowInput(false);
     };
 
     useEffect(() => {
@@ -65,41 +66,46 @@ export default function Home() {
         }
     })
 
-
-
     return (
-        <div className='welcomeMain'>
-            {isLoggedIn ? (
-                <div className='welcome mt-5'>
-                    <h1></h1>
-                </div>
-            ) : (
-                <div className='welcome'>
-                    <h1>WELCOME TO LEVEL UP</h1>
-                </div>
-
-            )
-            }
-            <div className='welcome-vid'>
-                <video src={videoSrc} type='video/mp4' controls>
-                    Your browser does not support the video tag.
-                </video>
+            <div className='welcomeMain'>
                 {isLoggedIn ? (
-                    showInput ? (
-                        <form encType='multipart/form-data'>
-                            <input type="file" name='videos' onChange={e => setSelectedFile(e.target.files[0])} />
-                            <input type="submit" onClick={handleUpload} className='input' />
-                        </form>
-                    ) : (
-                        <p id="userMessage" >Video has been uploaded. Please wait 1 minute to upload another video.</p>
-                    )
+                    <div className='welcome mt-5'>
+                        <h1></h1>
+                    </div>
                 ) : (
-                    <p>Sign up or login to upload videos</p>
-                )}
+                    <div className='welcome'>
+                        <h1>WELCOME TO LEVEL UP</h1>
+                    </div>
 
-
-
+                )
+                }
+                {/* <Rnd
+                    default={{
+                        x: -40,
+                        y: 100,
+                        width: 500,
+                        height: 500,
+                    }}
+                    bounds=".App"
+                > */}
+                    <div className='welcome-vid'>
+                        <video src={videoSrc} type='video/mp4' controls>
+                            Your browser does not support the video tag.
+                        </video>
+                        {isLoggedIn ? (
+                            showInput ? (
+                                <form encType='multipart/form-data'>
+                                    <input type="file" name='videos' onChange={e => setSelectedFile(e.target.files[0])} />
+                                    <input type="submit" onClick={handleUpload} className='input' />
+                                </form>
+                            ) : (
+                                <p id="userMessage" >Video has been uploaded. Please wait 1 minute to upload another video.</p>
+                            )
+                        ) : (
+                            <p>Sign up or login to upload videos</p>
+                        )}
+                    </div>
+                {/* </Rnd> */}
             </div>
-        </div>
     );
 };

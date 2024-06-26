@@ -1,9 +1,12 @@
 body {
-    background: linear-gradient(to right, #1c3844, #3c6e7e, #5eb6dc)!important;
-
+    background: url('/colorful_swirl_shape_abstract_4k_hd_abstract-HD-3772982610.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
 }
 
 .App {
+    position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
